@@ -1,0 +1,75 @@
+version: "0.1.0"
+
+metadata:
+  flow_type: "compound"
+  name: "custom-workout-planner"
+  description: "A personalized workout planner that generates tailored workout plans based on user goals, equipment, and time."
+  author: "adddy"
+  tags: ["workout", "fitness", "health", "personalized"]
+  private: true
+
+inputs:
+  fitness_goal:
+    type: string
+    description: "The user's fitness goal (e.g., strength, endurance, flexibility)."
+    required: true
+    example: "strength"
+  available_equipment:
+    type: string
+    description: "The equipment available to the user."
+    required: true
+    example: "dumbbells, yoga mat"
+  time_available:
+    type: integer
+    description: "The time available for the workout in minutes."
+    required: true
+    example: 30
+
+workflow:
+  initial_processing:
+    type: "elemental"
+    flow_name: "fitness-api/initial_processing"
+    inputs:
+      goal: ${inputs.fitness_goal}
+      equipment: ${inputs.available_equipment}
+      duration: ${inputs.time_available}
+
+  personalized_plan_generation:
+    type: "custom"
+    inputs:
+      fitness_data: ${initial_processing.output}
+    model:
+      provider: "openai"
+      name: "gpt-4o"
+    prompt: |
+      Create a detailed workout plan based on the following data:
+      Fitness Goal: {fitness_data.goal}
+      Available Equipment: {fitness_data.equipment}
+      Time Available: {fitness_data.duration} minutes
+
+  feedback_collection:
+    type: "custom"
+    depends_on: [initial_processing, personalized_plan_generation]
+    inputs:
+      initial_feedback: ${initial_processing.output}
+      plan_feedback: ${personalized_plan_generation.output}
+    model:
+      provider: "anthropic"
+      name: "claude-3.5-sonnet"
+    prompt: |
+      Based on the workout plan and user feedback, optimize the workout routine:
+      - Initial Feedback: {initial_feedback}
+      - Plan Feedback: {plan_feedback}
+
+output:
+  value:
+    - ${initial_processing.output}
+    - ${personalized_plan_generation.output}
+    - ${feedback_collection.output}
+
+readme: |
+  ### Custom Workout Planner
+  This flow generates a personalized workout plan by:
+  1. **Initial Processing**: Analyzes user goals, equipment, and time.
+  2. **Plan Generation**: Uses AI to create a detailed workout plan.
+  3. **Feedback Collection**: Refines the plan based on user feedback.
