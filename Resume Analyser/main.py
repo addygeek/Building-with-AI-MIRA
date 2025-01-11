@@ -19,3 +19,6 @@ else:
 
 result = client.flow.execute(flow_name, input_data)
 print(result)
+print(result)
+print(result)
+print(result)

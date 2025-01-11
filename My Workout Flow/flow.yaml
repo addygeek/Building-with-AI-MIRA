@@ -1,0 +1,146 @@
+version: 0.0.1
+metadata:
+  name: workout-planner
+  description: A personalized and dynamic workout planner based on user goals, preferences,
+    and fitness levels
+  author: addy
+  private: false
+  tags:
+  - fitness
+  - health
+  - workout
+  - personalization
+  - AI
+inputs:
+  user_age:
+    type: string
+    description: User's age
+    required: true
+    example: '25'
+  user_gender:
+    type: string
+    description: User's gender
+    required: true
+    example: male
+  fitness_goal:
+    type: string
+    description: User's fitness goal
+    required: true
+    example: weight loss
+  days_per_week:
+    type: string
+    description: Number of workout days per week
+    required: true
+    example: '5'
+  fitness_level:
+    type: string
+    description: User's current fitness level
+    required: true
+    example: beginner
+  user_feedback:
+    type: string
+    description: Feedback from the user about the workout
+    required: false
+    example: too intense
+  progress_metrics:
+    type: string
+    description: Progress metrics like weight and body fat percentage
+    required: false
+    example: 'weight: 70, body_fat_percentage: 20'
+  workout_duration:
+    type: string
+    description: Preferred workout duration in minutes
+    required: true
+    example: '45'
+  available_equipment:
+    type: string
+    description: Available workout equipment
+    required: true
+    example: dumbbells, resistance bands
+  preferred_workout_types:
+    type: string
+    description: Preferred types of workout
+    required: true
+    example: cardio, strength training
+output:
+  name: story
+  type: string
+model:
+  provider: anthropic
+  name: claude-3.5-sonnet
+prompt: 'You are an expert fitness trainer and workout planner. Your task is to create
+  a personalized and dynamic workout plan based on the user''s specific goals, preferences,
+  and fitness levels. Use the following information to generate a tailored workout
+  routine:
+
+
+  User Profile:
+
+  - Age: {user_age}
+
+  - Gender: {user_gender}
+
+  - Fitness Goal: {fitness_goal}
+
+  - Current Fitness Level: {fitness_level}
+
+
+  Workout Preferences:
+
+  - Preferred Workout Types: {preferred_workout_types}
+
+  - Available Equipment: {available_equipment}
+
+  - Workout Duration: {workout_duration} minutes
+
+  - Days per Week: {days_per_week}
+
+
+  If provided, also consider:
+
+  - User Feedback: {user_feedback}
+
+  - Progress Metrics: {progress_metrics}
+
+
+  Based on this information, create a detailed workout plan that includes:
+
+  1. A weekly schedule outlining the types of exercises for each day
+
+  2. Specific exercises, sets, reps, and rest periods for each workout
+
+  3. Recommendations for warm-up and cool-down routines
+
+  4. Tips for proper form and technique
+
+  5. Suggestions for progression and how to adjust the plan over time
+
+
+  Ensure the plan is tailored to the user''s fitness level, goals, and preferences.
+  Provide clear instructions and explanations for each part of the workout routine.
+
+  '
+readme: '# Workout Planner Flow
+
+
+  This elemental flow generates a personalized workout plan based on user inputs such
+  as age, gender, fitness goals, and preferences. It uses AI to tailor the workout
+  routine to individual needs.
+
+
+  ## Features
+
+  - Weekly workout schedule
+
+  - Specific exercise details
+
+  - Warm-up and cool-down recommendations
+
+  - Tips for proper form and progression
+
+
+  ## Usage
+
+  Provide the required inputs to generate a customized workout plan.
+
+  '
