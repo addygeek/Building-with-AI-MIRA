@@ -5,3 +5,5 @@ i builded work out planner which takes 7 inputs and then prepare a very customis
 i have done it😁
 
 improving more and thinking to make.newflow
+
+New flow update: thinking to make a new floe.for automating analysis 
